@@ -15,7 +15,7 @@ COPY ${JAR_FILE}  devops-app-2024.jar
 CMD apt-get update
 
 #iç portu sabitlemek için
-EXPOSE 8080
+EXPOSE 8081
 
 #Uygulamanın çalışacağı komut
 ENTRYPOINT [ "java", "-jar", "devops-app-2024.jar"]
