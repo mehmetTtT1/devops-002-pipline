@@ -8,7 +8,7 @@ ARG JAR_FILE=target/*.jar
 
 
 #rPojenin jar halini dockerın içine kopyala
-COPY ${JAR_FILE}  devops-app-2024.jar
+COPY ${JAR_FILE}  devops-app.jar
 
 #terminalde çalıştırmak istediğimiz komutları burda yazarız
 
@@ -18,5 +18,5 @@ CMD apt-get update
 EXPOSE 8081
 
 #Uygulamanın çalışacağı komut
-ENTRYPOINT [ "java", "-jar", "devops-app-2024.jar"]
+ENTRYPOINT [ "java", "-jar", "devops-app.jar"]
 
