@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven3'
+        jdk 'JDK17'
+    }
+
+    stages {
+        stage('Build Maven') {
+            steps {
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mehmetTtT1/devops-002-pipline']])
+                bat 'mvn clean install'
+            }
+        }
+
+        stage('Docker Image') {
+            steps {
+               bat 'docker build --build-arg JAR_FILE=target/my-application.jar --tag mehmetarslan22/my-application:v001 -t mehmetarslan22/my-application:latest .'
+            }
+        }
+
+
+         stage('Docker Image To DockerHub') {
+            steps {
+                script{
+               withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
+
+
+                    bat 'docker login  -u mehmetarslan22 -p   %dockerhub%'
+
+                    bat 'docker push mehmetarslan22/my-application:latest'
+
+                }
+               }
+            }
+
+        }
+    }
+}
